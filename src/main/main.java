@@ -1,6 +1,5 @@
 package main;
 
-
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
@@ -17,36 +16,34 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-
 public class main {
 
-    
     public static void main(String[] args) {
-        
-        Logger mongoLogger = Logger.getLogger( "org.mongodb.driver" );
-        mongoLogger.setLevel(Level.SEVERE); 
+
+        Logger mongoLogger = Logger.getLogger("org.mongodb.driver");
+        mongoLogger.setLevel(Level.SEVERE);
 
         String uri = "mongodb+srv://admin:admin@tp3laboratorio-cxayj.mongodb.net/test";
         MongoClientURI clientURI = new MongoClientURI(uri);
         MongoClient mongoClient = new MongoClient(clientURI);
         MongoDatabase mongoDatabase = mongoClient.getDatabase("paises_db");
         MongoCollection collection = mongoDatabase.getCollection("paises");
-        
+
         Document document = new Document();
-        
+
         String datosJson = "https://restcountries.eu/rest/v2/callingcode/";
-        
+
         JSONParser parser = new JSONParser();
-        
-        for (int i = 1; i <= 2; i++) {
-            
+
+        for (int i = 1; i <= 300; i++) {
+
             try {
-                
+
                 URL link = new URL(datosJson + i);
                 URLConnection yc = link.openConnection();
-                
+
                 BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
-                
+
                 JSONArray arrjson = (JSONArray) parser.parse(in.readLine());
                 if (arrjson != null) {
                     for (Object object : arrjson) {
